@@ -21,16 +21,30 @@ class Image
 				end
 			end
 		end
-		ones.each do |i, x|
-			if x < (@nested_array[i].length - 1)
-				@nested_array[i+1][x] = 1
-				@nested_array[i-1][x] = 1
-				@nested_array[i][x+1] = 1
-				@nested_array[i][x-1] = 1
+		ones.each do |i, index|
+			if @nested_array[i].length - 1 == index
+				@nested_array[i+1][index] = 1
+				@nested_array[i-1][index] = 1
+				@nested_array[i][index-1] = 1
+			elsif i == @nested_array.length - 1
+				@nested_array[i-1][index] = 1
+				@nested_array[i][index+1] = 1
+				unless index == 0
+					@nested_array[i][index-1] = 1
+				end
+			elsif index == 0
+				@nested_array[i+1][index] = 1
+				@nested_array[i-1][index] = 1
+				@nested_array[i][index+1] = 1
+			elsif i == 0
+				@nested_array[i+1][index] = 1
+				@nested_array[i][index+1] = 1
+				@nested_array[i][index-1] = 1
 			else
-				@nested_array[i+1][x] = 1
-				@nested_array[i-1][x] = 1
-				@nested_array[i][x-1] = 1
+				@nested_array[i+1][index] = 1
+				@nested_array[i-1][index] = 1
+				@nested_array[i][index+1] = 1
+				@nested_array[i][index-1] = 1
 			end
 		end
 		return self.output_image
@@ -47,3 +61,31 @@ image = Image.new([
 image.output_image
 puts "---"
 image.blur
+puts "end of original image"
+
+image_two = Image.new ([
+  [0, 0, 0, 0],
+  [0, 0, 1, 0],
+  [0, 0, 0, 0],
+  [1, 0, 0, 0]
+])
+puts "start image two"
+image_two.output_image
+puts "---"
+
+image_two.blur
+puts "end of image two"
+
+image_three = Image.new ([
+  [1, 0, 0, 0],
+  [0, 0, 1, 0],
+  [0, 0, 0, 0],
+  [0, 1, 0, 0]
+])
+
+puts "start image three"
+image_three.output_image
+puts "---"
+
+image_three.blur
+puts "end of image three"
