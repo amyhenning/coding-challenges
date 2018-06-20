@@ -33,6 +33,9 @@ class Image
 			# The two variables defined below broke the code - it no longer changes the 0s to the left or right of a 1 :(
 			pixel_left = @nested_array[row][pixel_index-1]
 			pixel_right = @nested_array[row][pixel_index+1]
+			# adding the two lines below resulted in some weirdness
+			puts pixel_left
+			puts pixel_right
 
 			# If the pixel with a value 1 is on the far right edge of the row 
 			# (i.e. the last item in the row array), transform just the 
