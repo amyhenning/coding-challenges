@@ -25,21 +25,26 @@ class Image
 				end
 			end
 		end
-
 		# Iterate over the hash that stores the locations (row index and pixel index) of 1s 
 		# from the original nested_array.
 		ones.each do |row, pixel_index|
+			row_below = @nested_array[row+1]
+			row_above = @nested_array[row-1]
+			# The two variables defined below broke the code - it no longer changes the 0s to the left or right of a 1 :(
+			pixel_left = @nested_array[row][pixel_index-1]
+			pixel_right = @nested_array[row][pixel_index+1]
+
 			# If the pixel with a value 1 is on the far right edge of the row 
 			# (i.e. the last item in the row array), transform just the 
 			# pixels above, below, and to the left of it. If the pixel is in the first or last row,
-			# just transform the 0 below and above the 1, respectively.
+			# just transform the 0 below or above the 1, respectively.
 			if @nested_array[row].length - 1 == pixel_index
+				pixel_left = 1
 				unless row == @nested_array.length - 1
-					@nested_array[row+1][pixel_index] = 1
+					row_below[pixel_index] = 1
 				end
-				@nested_array[row][pixel_index-1] = 1
 				unless row == 0
-					@nested_array[row-1][pixel_index] = 1
+					row_above[pixel_index] = 1
 				end
 
 			# If the row is the bottom row (i.e. the last nested array in the original array), 
@@ -48,32 +53,32 @@ class Image
 			# transform its value minus 1 (i.e. index -1) because that will change the last 
 			# pixel of the row.
 			elsif row == @nested_array.length - 1
-				@nested_array[row-1][pixel_index] = 1
-				@nested_array[row][pixel_index+1] = 1
+				row_above[pixel_index] = 1
+				pixel_right = 1
 				unless pixel_index == 0
-					@nested_array[row][pixel_index-1] = 1
+					pixel_left = 1
 				end
 
 			# If the pixel is the first one (i.e. all the way on the left), transform the 0s above,
 			# below, and to the right of it. 
 			elsif pixel_index == 0
-				@nested_array[row+1][pixel_index] = 1
-				@nested_array[row-1][pixel_index] = 1
-				@nested_array[row][pixel_index+1] = 1
+				row_below[pixel_index] = 1
+				row_above[pixel_index] = 1
+				pixel_right = 1
 
 			# If the pixel is in the top row, only transform the pixels immediately to the left, right,
 			# and below it as there is no row above it.
 			elsif row == 0
-				@nested_array[row+1][pixel_index] = 1
-				@nested_array[row][pixel_index+1] = 1
-				@nested_array[row][pixel_index-1] = 1
+				row_below[pixel_index] = 1
+				pixel_right = 1
+				pixel_left = 1
 
 			# Otherwise transform all of the surrounding pixels.
 			else
-				@nested_array[row+1][pixel_index] = 1
-				@nested_array[row-1][pixel_index] = 1
-				@nested_array[row][pixel_index+1] = 1
-				@nested_array[row][pixel_index-1] = 1
+				row_below[pixel_index] = 1
+				row_above[pixel_index] = 1
+				pixel_right = 1
+				pixel_left = 1
 			end
 		end
 		return self.output_image
