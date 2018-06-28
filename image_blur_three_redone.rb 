@@ -1,0 +1,13 @@
+class Image
+  def initialize(nested_array)
+    @nested_array = nested_array
+  end
+
+  def output_image
+    @nested_array.each_index do |row|
+      @nested_array[row].each do |pixel|
+        print pixel
+      end
+      puts
+    end
+  end
