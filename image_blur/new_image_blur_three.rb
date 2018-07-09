@@ -84,6 +84,7 @@ class Image
           lower_limit = row + distance
           left_limit = pixel_index - distance
           right_limit = pixel_index + distance
+          puts "right limit is #{right_limit}"
           # UP
           unless @nested_array[upper_limit][pixel_index] == nil
             if upper_limit >= 0
@@ -104,10 +105,14 @@ class Image
           end
           # RIGHT
           unless @nested_array[row][right_limit] == nil
-            @nested_array[row][right_limit] = 1 # transform the pixel "distance" spaces to the right of the original 1
+            if right_limit < @nested_array[row].length
+              @nested_array[row][right_limit] = 1 # transform the pixel "distance" spaces to the right of the original 1
+            end
           end
           unless @nested_array[row][pixel_right] == nil
-            @nested_array[row][pixel_right] = 1 # transform the pixels to the right of the original 1
+            if pixel_right < @nested_array[row].length
+              @nested_array[row][pixel_right] = 1 # transform the pixels to the right of the original 1
+            end
           end
           # UPPER RIGHT
           unless @nested_array[row_above][pixel_right] == nil
@@ -117,7 +122,9 @@ class Image
           end
           # LOWER RIGHT
           unless row_below >= @nested_array.length
-            @nested_array[row_below][pixel_right] = 1 # transform the pixels on the lower right of the original 1
+            if pixel_right < @nested_array[row_below].length
+              @nested_array[row_below][pixel_right] = 1 # transform the pixels on the lower right of the original 1
+            end
           end
           # LEFT
           unless @nested_array[row][left_limit] == nil
@@ -157,7 +164,7 @@ image = Image.new([
   [0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0],
+  [1, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0]
