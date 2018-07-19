@@ -45,22 +45,24 @@ class PaginationHelper
   # this method should return -1 for item_index values that are out of range
   def page_index(item_index)
     # page 0: [0, 1, 2, 3]
+    # if the collection is empty, return negative 1
+    if collection.empty?
+      return -1
     # if the item_index is between 0 and items_per_page -1, return 0
-    if item_index < items_per_page && item_index >= 0
+    elsif item_index < items_per_page && item_index >= 0
       return 0
-    # otherwise, figure out which page the item is on using range...
-    elsif items_per_page < item_index && item_index <= (items_per_page * 2)
-     # page 1: [4, 5]
-      return 1
     # if the given item_index is not within the range of 0 to the item_count-1 (to account for 0-based index),
     # return -1
     elsif (0..item_count-1).include?(item_index) == false
       return -1
+    # otherwise, figure out which page the item is on using range...
+    else
+      return (item_index.to_f / items_per_page.to_f).floor
     end
   end
 end
 
-helper = PaginationHelper.new(['a','b','c','d','e','f'], 4)
+helper = PaginationHelper.new(['a','b','c','d','e','f', 'g', 'h', 'i', 'j'], 3)
 puts "should == 2: #{helper.page_count}" # should == 2
 puts "should == 6: #{helper.item_count}" # should == 6
 puts "should == 4: #{helper.page_item_count(0)}"  # should == 4
@@ -69,6 +71,9 @@ puts "should == -1 #{helper.page_item_count(2)}"  # should == -1 since the page 
 
 # page_ndex takes an item index and returns the page that it belongs on
 puts helper.page_index(5) # should == 1 (zero based index)
+puts helper.page_index(6) # should == 1 (zero based index)
+puts helper.page_index(9) # should == 1 (zero based index)
+
 puts helper.page_index(2) # should == 0
 puts helper.page_index(20) # should == -1
 puts helper.page_index(-10) # should == -1 because negative indexes are invalid
