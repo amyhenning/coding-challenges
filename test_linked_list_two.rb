@@ -18,10 +18,16 @@ def print_values(list_node)
 end
 
 def reverse_list(list, previous=nil)
+  # set the current_head to be the second node in the list
   current_head = list.next_node
+  # set the value of the first node in the current list
+  # to be nil on the first iteration
   list.next_node = previous
+  # if current_head has a value (??), call reverse_list on that
+  # value to continue through the list
   if current_head
     reverse_list(current_head, list)
+  # if current_head has no value (??), the reversed list is complete
   else
     list
   end
