@@ -37,9 +37,9 @@ class Stack
 		# If the stack isn't empty, the value to return is the value of the current top_node
 		else
 			value = @top_node.value
-			puts value
 			# reset the @top_node to be the node that the current @top_node points to
 			@top_node = @top_node.next_node
+			return value
 		end
 	end
 end
@@ -93,11 +93,11 @@ stack.push(2)
 puts stack.inspect
 
 # Pops (removes) the TOP number from the stack (2)
- stack.pop
+puts stack.pop
 
 # Pops the remaining number from the stack (1)
- stack.pop
+puts stack.pop
 
 # Tries to pop the TOP number from the stack,
 # but it is empty so it returns nil
- stack.pop
+puts stack.pop
