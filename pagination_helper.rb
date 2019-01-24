@@ -57,12 +57,12 @@ class PaginationHelper
       return -1
     # otherwise, figure out which page the item is on using range...
     else
-      return (item_index.to_f / items_per_page.to_f).floor
+      return  (item_index.to_f / items_per_page.to_f).floor
     end
   end
 end
 
-helper = PaginationHelper.new(['a','b','c','d','e','f', 'g', 'h', 'i', 'j'], 3)
+helper = PaginationHelper.new(['a','b','c','d','e','f', 'g', 'h', 'i', 'j'], 4)
 puts "should == 2: #{helper.page_count}" # should == 2
 puts "should == 6: #{helper.item_count}" # should == 6
 puts "should == 4: #{helper.page_item_count(0)}"  # should == 4
@@ -72,7 +72,7 @@ puts "should == -1 #{helper.page_item_count(2)}"  # should == -1 since the page 
 # page_ndex takes an item index and returns the page that it belongs on
 puts helper.page_index(5) # should == 1 (zero based index)
 puts helper.page_index(6) # should == 1 (zero based index)
-puts helper.page_index(9) # should == 1 (zero based index)
+puts helper.page_index(9) # should == 2 (zero based index)
 
 puts helper.page_index(2) # should == 0
 puts helper.page_index(20) # should == -1
