@@ -25,13 +25,3 @@ puts is_digit("zero") # should be false
 puts is_digit("-4 -54") # should be false
 puts is_digit("02934098230498230598")
 puts is_digit("123!")
-
-# should return "true" for single integers or single floats.
-
-
-
-# solve for...
-# cases where there are two separate digits -> should be false YES
-# cases where there are no numbers -> should be false (DONE)
-# floats -> should be true
-# positive and negatives (i.e. a - before a number) -> check if the string includes a -, then see where it falls, then evaluate if the thing is a number (int or float?)

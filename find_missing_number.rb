@@ -18,7 +18,6 @@ def find_missing_number(sequence)
   elsif numbers.each_cons(2).all? { |x, y| y == x + 1 } == true
     return 0
   else
-    # return (numbers.min .. numbers.max).reduce(0, &:+) - numbers.reduce(0, &:+)
     numbers.each_with_index do |num, i|
       if num != i + 1
         return i + 1
